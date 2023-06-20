@@ -44,7 +44,7 @@ const dirName = path.join(__dirname, "files");
 //     })
 // });
 
-// ******************* update file *******************
+// ******************* Update file *******************
 // fs.readdir(dirName, (err, files)=>{
 //     files.forEach((item)=>{
 //         fs.appendFile(dirName+'/'+item, ' This text is appended now.', (er)=>{
@@ -53,7 +53,7 @@ const dirName = path.join(__dirname, "files");
 //     })
 // });
 
-// ******************* rename file *******************
+// ******************* Rename file *******************
 // fs.readdir(dirName, (err, files)=>{
 //     files.forEach((item)=>{
 //         fs.rename(dirName+'/'+item, dirName+'/'+input[2], (er)=>{

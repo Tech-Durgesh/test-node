@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Profile Page</title>
+    <style>
+        h2 {
+            color: darkgoldenrod;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('common/header') %>
+    <h2>Profiles Page</h2>
+    <table>
+        <% data.forEach((item)=>{ %>
+            <tr>
+                <td><%= item.name %></td>
+                <td><%= item.email %></td>
+                <td><%= item.mobile %></td>
+                <td><%= item.designation %></td>
+            </tr>
+            <% }) %>
+    </table>
+</body>
+
+</html>

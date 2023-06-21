@@ -1,93 +1,44 @@
-const http = require("http");
-const data = require("./data");
-const input = process.argv;
-const fs = require("fs");
-const path = require("path");
-const dirName = path.join(__dirname, "files");
+const express = require('express');
+const path = require('path');
+const data = require('./data');
 
-// ******************* Simple static API *******************
-// const myFn = (req, resp) => {
-//   resp.writeHead(200, { "Content-type": "applicationjson" });
-//   resp.write(
-//     JSON.stringify(data)
-//   );
-//   resp.end();
-// };
+const app = express();
+const publicPath = path.join(__dirname, 'public');
 
-// ******************* Get input values by console *******************
-// console.log(input);
-
-// ******************* Create multiple directories *******************
-// for(i=0; i < 5; i++){
-//     fs.writeFileSync(dirName+'/'+input[2]+i, input[3]);
-// }
-
-// ******************* Delete multiple directories *******************
-// for(i=0; i < 5; i++){
-//     fs.unlinkSync(dirName+'/'+input[2]+i, input[3]);
-// }
-
-// ******************* Read directory *******************
-// fs.readdir(dirName, (err, files)=>{
-//     files.forEach((item)=>{
-//         console.log(item);
-
-//     })
-// });
-
-// ******************* Read file *******************
-// fs.readdir(dirName, (err, files)=>{
-//     files.forEach((item)=>{
-//         fs.readFile(dirName+'/'+item, 'utf8', (er, file)=>{
-//             console.log(file);
-//         })
-//     })
-// });
-
-// ******************* Update file *******************
-// fs.readdir(dirName, (err, files)=>{
-//     files.forEach((item)=>{
-//         fs.appendFile(dirName+'/'+item, ' This text is appended now.', (er)=>{
-//             if(!er) console.log("file text updated!");
-//         })
-//     })
-// });
-
-// ******************* Rename file *******************
-// fs.readdir(dirName, (err, files)=>{
-//     files.forEach((item)=>{
-//         fs.rename(dirName+'/'+item, dirName+'/'+input[2], (er)=>{
-//             if(!er) console.log("file name updated!");
-//         })
-//     })
-// });
-
-// ******************* Asynchronus example *******************
-// let a = 12;
-// let b = 12;
-
-// setTimeout(()=>{
-//     b= 20;
-// }, 3000)
-
-// console.log(a+b);
-
-// ******************* Promises example *******************
-let a = 10;
-let b = 20;
-
-let waitingData = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    resolve(30);
-  }, 3000);
-});
-
-waitingData.then((data) => {
-  console.log("after promise data : ", a + data);
-});
-
-console.log("before promise data : ", a + b);
+// ************** In this case we need to give extension for the file in url **************
+// app.use(express.static(publicPath));
 
 
+// ************** In this case we don't need to give extension for the file in url **************
+app.set('view engine', 'ejs');
 
-// http.createServer(promises).listen(5000);
+app.get('', (req, resp)=>{
+    resp.sendFile(`${publicPath}/index.html`);  // rendring default from public folder
+})
+
+app.get('/about', (req, resp)=>{
+    resp.sendFile(`${publicPath}/about.html`);  // rendring default from public folder
+})
+
+app.get('/help', (req, resp)=>{
+    resp.sendFile(`${publicPath}/help.html`);  // rendring default from public folder
+})
+
+app.get('/profile', (req, resp)=>{
+    resp.render('profile', {data});  // rendring by EJS template engine
+})
+
+app.get('/detail', (req, resp)=>{
+    resp.render('detail');  // rendring by EJS template engine
+})
+
+app.get('/login', (req, resp)=>{
+    resp.render('login');  // rendring by EJS template engine
+})
+
+app.get('*', (req, resp)=>{
+    resp.sendFile(`${publicPath}/404.html`);
+})
+
+app.listen(5100);
+

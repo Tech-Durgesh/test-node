@@ -7,14 +7,26 @@ const data = [
   },
   {
     name: "Akhil Parmar",
-    designation: "Sr. Software Developer",
+    designation: "Sr. Frontend Developer",
     email: "akhil@kanhasoft.com",
     mobile: "+91 12345-67890",
   },
   {
-    name: "Vijay Gohil",
-    designation: "DevOps",
+    name: "Vijay Sarvaiya",
+    designation: "Full Stack Developer",
     email: "vijay@kanhasoft.com",
+    mobile: "+91 12345-67890",
+  },
+  {
+    name: "Vijay Gohil",
+    designation: "Full Stack Developer",
+    email: "vijayG@kanhasoft.com",
+    mobile: "+91 12345-67890",
+  },
+  {
+    name: "Harul Koshti",
+    designation: "Full Stack Developer",
+    email: "harul@kanhasoft.com",
     mobile: "+91 12345-67890",
   },
 ];

@@ -1,44 +1,22 @@
 const express = require('express');
-const path = require('path');
-const data = require('./data');
-
 const app = express();
-const publicPath = path.join(__dirname, 'public');
 
-// ************** In this case we need to give extension for the file in url **************
-// app.use(express.static(publicPath));
+const {MongoClient} = require('mongodb');
+const url = "mongodb://localhost:27017";
+const client = new MongoClient(url);
 
+let output = '';
+async function getData(){
+    let connection = await client.connect();
+    let database = connection.db('school');
+    let collection = database.collection('students');
+    output = await collection.find({}).toArray();
+}
 
-// ************** In this case we don't need to give extension for the file in url **************
-app.set('view engine', 'ejs');
+getData();
 
 app.get('', (req, resp)=>{
-    resp.sendFile(`${publicPath}/index.html`);  // rendring default from public folder
-})
+    resp.send(output);
+});
 
-app.get('/about', (req, resp)=>{
-    resp.sendFile(`${publicPath}/about.html`);  // rendring default from public folder
-})
-
-app.get('/help', (req, resp)=>{
-    resp.sendFile(`${publicPath}/help.html`);  // rendring default from public folder
-})
-
-app.get('/profile', (req, resp)=>{
-    resp.render('profile', {data});  // rendring by EJS template engine
-})
-
-app.get('/detail', (req, resp)=>{
-    resp.render('detail');  // rendring by EJS template engine
-})
-
-app.get('/login', (req, resp)=>{
-    resp.render('login');  // rendring by EJS template engine
-})
-
-app.get('*', (req, resp)=>{
-    resp.sendFile(`${publicPath}/404.html`);
-})
-
-app.listen(5100);
-
+app.listen(4000);

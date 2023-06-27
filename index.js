@@ -2,19 +2,18 @@ const express = require("express");
 const app = express();
 const connection = require("./mongodb");
 
-let students = [];
-async function studentsList() {
+app.use(express.json());
+
+app.get("/students", async (req, resp) => {
   let collection = await connection();
   let results = await collection.find({}).toArray();
-  results.forEach((student) => {
-    students.push(student);
-  });
-}
-studentsList();
+  resp.send(results);
+});
 
-app.set("view engine", "ejs");
-app.get("/students", (req, resp) => {
-  resp.render("students", { students });
+app.post("/add-student", async (req, resp) => {
+  let collection = await connection();
+  let results = await collection.insertMany(req.body);
+  resp.send(results);
 });
 
 app.listen(4000);

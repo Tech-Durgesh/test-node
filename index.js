@@ -1,22 +1,20 @@
-const express = require('express');
+const express = require("express");
 const app = express();
+const connection = require("./mongodb");
 
-const {MongoClient} = require('mongodb');
-const url = "mongodb://localhost:27017";
-const client = new MongoClient(url);
-
-let output = '';
-async function getData(){
-    let connection = await client.connect();
-    let database = connection.db('school');
-    let collection = database.collection('students');
-    output = await collection.find({}).toArray();
+let students = [];
+async function studentsList() {
+  let collection = await connection();
+  let results = await collection.find({}).toArray();
+  results.forEach((student) => {
+    students.push(student);
+  });
 }
+studentsList();
 
-getData();
-
-app.get('', (req, resp)=>{
-    resp.send(output);
+app.set("view engine", "ejs");
+app.get("/students", (req, resp) => {
+  resp.render("students", { students });
 });
 
 app.listen(4000);

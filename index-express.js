@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 
 app.get("", (request, response) => {
-  console.log(request?.query?.name);
   response.send(
     `<h1>Hello ${
       request?.query?.name ?? "User"

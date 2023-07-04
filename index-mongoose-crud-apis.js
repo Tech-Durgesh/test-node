@@ -15,7 +15,7 @@ const fileUpload = multer({
             callBack(null, file.fieldname+'_'+Date.now()+'.jpg');
         }
     })
-}).single("file");
+});
 
 app.post('/insert', async (req, resp)=>{
     let record = new StudentModel(req?.body);
@@ -41,7 +41,7 @@ app.delete('/delete/:_id', async (req, resp)=>{
     resp.send(result);
 });
 
-app.post('/file-upload', fileUpload, (req, resp) => {
+app.post('/file-upload', fileUpload.single("file"), (req, resp) => {
     resp.send('Uploaded successfully!');
 })
 
